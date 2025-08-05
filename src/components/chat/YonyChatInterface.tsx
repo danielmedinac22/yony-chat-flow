@@ -9,66 +9,13 @@ import { Settings, MessageCircle, Zap } from "lucide-react";
 export const YonyChatInterface = () => {
   const [chatMode, setChatMode] = useState<'n8n' | 'fallback'>('n8n');
   const [n8nLoaded, setN8nLoaded] = useState(false);
-  const [connectionStatus, setConnectionStatus] = useState('connecting');
   const [debugInfo, setDebugInfo] = useState({
     webhookUrl: 'https://yony-agents-n8n.evpwva.easypanel.host/webhook/fced9613-a284-4bf3-bfc3-7811acd0013f/chat',
     timestamp: new Date().toISOString(),
-    mode: 'n8n-integration',
-    lastResponse: null as any,
-    requestCount: 0
+    mode: 'n8n-integration'
   });
 
   useEffect(() => {
-    // Test webhook connectivity
-    const testWebhook = async () => {
-      try {
-        console.log('🔍 YonY: Testing webhook connectivity...');
-        const response = await fetch(debugInfo.webhookUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Source': 'YonY-ConnectivityTest'
-          },
-          body: JSON.stringify({
-            action: 'testConnection',
-            sessionId: 'test-session',
-            chatInput: 'test connectivity',
-            metadata: {
-              source: 'yony-web-chat',
-              version: '1.0.0',
-              test: true
-            }
-          })
-        });
-
-        const data = await response.json();
-        console.log('🔍 YonY: Webhook test response:', data);
-        
-        setDebugInfo(prev => ({
-          ...prev,
-          lastResponse: data,
-          requestCount: prev.requestCount + 1
-        }));
-
-        if (response.ok) {
-          setConnectionStatus('connected');
-          console.log('✅ YonY: Webhook is accessible');
-        } else {
-          setConnectionStatus('error');
-          console.warn('⚠️ YonY: Webhook returned error:', response.status);
-        }
-      } catch (error) {
-        console.error('❌ YonY: Webhook test failed:', error);
-        setConnectionStatus('error');
-        setDebugInfo(prev => ({
-          ...prev,
-          lastResponse: { error: error.message }
-        }));
-      }
-    };
-
-    testWebhook();
-
     // Check if n8n chat loads successfully
     const checkN8nLoad = setTimeout(() => {
       const n8nContainer = document.getElementById('n8n-chat-container');
@@ -79,7 +26,7 @@ export const YonyChatInterface = () => {
         console.warn('⚠️ YonY: n8n chat widget not detected, using fallback');
         setChatMode('fallback');
       }
-    }, 5000); // Increased timeout
+    }, 3000);
 
     return () => clearTimeout(checkN8nLoad);
   }, []);
@@ -93,39 +40,22 @@ export const YonyChatInterface = () => {
             <div className="flex items-center justify-between">
               <CardTitle className="text-sm text-destructive flex items-center gap-2">
                 <Settings size={16} />
-                YonY Debug Mode - Connection: {connectionStatus}
+                YonY Debug Mode
               </CardTitle>
               <Badge variant="destructive">n8n Fallback</Badge>
             </div>
           </CardHeader>
-          <CardContent className="text-xs text-muted-foreground space-y-2">
+          <CardContent className="text-xs text-muted-foreground">
             <p>Webhook: {debugInfo.webhookUrl}</p>
-            <p>Status: Using local chat fallback</p>
-            <p>Requests sent: {debugInfo.requestCount}</p>
-            {debugInfo.lastResponse && (
-              <div className="bg-muted p-2 rounded text-xs">
-                <p><strong>Last Response:</strong></p>
-                <pre className="whitespace-pre-wrap overflow-x-auto">
-                  {JSON.stringify(debugInfo.lastResponse, null, 2)}
-                </pre>
-              </div>
-            )}
-            <div className="flex gap-2">
-              <Button 
-                size="sm" 
-                variant="outline" 
-                onClick={() => setChatMode('n8n')}
-              >
-                Retry n8n Connection
-              </Button>
-              <Button 
-                size="sm" 
-                variant="ghost"
-                onClick={() => window.location.reload()}
-              >
-                Reload Page
-              </Button>
-            </div>
+            <p>Status: Using local chat fallback - n8n integration will be available once configured</p>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="mt-2"
+              onClick={() => setChatMode('n8n')}
+            >
+              Retry n8n Connection
+            </Button>
           </CardContent>
         </Card>
 
@@ -150,50 +80,31 @@ export const YonyChatInterface = () => {
       )}
 
       {/* Debug info for development */}
-      <div className="absolute top-4 left-4 z-50">
-        <Card className="w-80 text-xs">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-xs flex items-center gap-1">
-              <MessageCircle size={12} />
-              YonY Debug Info
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div>Mode: {chatMode}</div>
-              <div>N8N Loaded: {n8nLoaded ? '✅' : '⏳'}</div>
-              <div>Connection: {connectionStatus}</div>
-              <div>Requests: {debugInfo.requestCount}</div>
-            </div>
-            {debugInfo.lastResponse && (
-              <div className="bg-muted p-2 rounded max-h-32 overflow-y-auto">
-                <p className="font-medium mb-1">Last Response:</p>
-                <pre className="text-xs whitespace-pre-wrap">
-                  {JSON.stringify(debugInfo.lastResponse, null, 2)}
-                </pre>
-              </div>
-            )}
-            <div className="flex gap-1">
+      {process.env.NODE_ENV === 'development' && (
+        <div className="absolute top-4 left-4 z-50">
+          <Card className="w-64 text-xs">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-xs flex items-center gap-1">
+                <MessageCircle size={12} />
+                YonY Debug
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-1">
+              <p>Mode: {chatMode}</p>
+              <p>N8N Loaded: {n8nLoaded ? '✅' : '⏳'}</p>
+              <p>Webhook: Active</p>
               <Button 
                 size="sm" 
                 variant="ghost" 
-                className="text-xs p-1 h-6"
+                className="w-full"
                 onClick={() => setChatMode(chatMode === 'n8n' ? 'fallback' : 'n8n')}
               >
                 Toggle Mode
               </Button>
-              <Button 
-                size="sm" 
-                variant="ghost" 
-                className="text-xs p-1 h-6"
-                onClick={() => window.location.reload()}
-              >
-                Reload
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
       {/* Main N8N Chat */}
       <N8nChatWidget />
