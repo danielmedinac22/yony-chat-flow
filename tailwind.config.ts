@@ -52,6 +52,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// YonY Brand Colors
+				yony: {
+					'light-green': 'hsl(var(--yony-light-green))',
+					'neon-green': 'hsl(var(--yony-neon-green))',
+					'neutral-gray': 'hsl(var(--yony-neutral-gray))',
+					'olive-green': 'hsl(var(--yony-olive-green))',
+					'dark-green': 'hsl(var(--yony-dark-green))',
+					'deep-blue': 'hsl(var(--yony-deep-blue))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

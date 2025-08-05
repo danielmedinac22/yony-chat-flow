@@ -8,35 +8,49 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* YonY Branding Colors - HSL converted */
+    --yony-light-green: 83 35% 89%;        /* #E8EFD8 */
+    --yony-neon-green: 82 100% 78%;        /* #D3FF90 */
+    --yony-neutral-gray: 210 2% 42%;       /* #686A6C */
+    --yony-olive-green: 88 23% 55%;        /* #8DA672 */
+    --yony-dark-green: 96 13% 40%;         /* #617358 */
+    --yony-deep-blue: 238 75% 10%;         /* #06082B */
+
+    /* Semantic Design Tokens */
+    --background: 83 35% 89%;              /* YonY light green */
+    --foreground: 238 75% 10%;             /* YonY deep blue */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 238 75% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 238 75% 10%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 88 23% 55%;                 /* YonY olive green */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 82 100% 78%;              /* YonY neon green */
+    --secondary-foreground: 238 75% 10%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 83 20% 95%;
+    --muted-foreground: 210 2% 42%;        /* YonY neutral gray */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 96 13% 40%;                  /* YonY dark green */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 83 20% 85%;
+    --input: 0 0% 100%;
+    --ring: 88 23% 55%;
 
     --radius: 0.5rem;
+
+    /* YonY Custom Properties */
+    --chat-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --chat-shadow: 0 4px 12px -2px hsl(var(--yony-dark-green) / 0.1);
+    --chat-glow: 0 0 20px hsl(var(--yony-neon-green) / 0.3);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +115,35 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* YonY Custom Animations */
+  @keyframes chat-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px hsl(var(--yony-neon-green) / 0.5);
+    }
+    50% {
+      box-shadow: 0 0 15px hsl(var(--yony-neon-green) / 0.8);
+    }
+  }
+
+  .chat-message {
+    animation: chat-fade-in 0.3s ease-out;
+  }
+
+  .yony-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 }
