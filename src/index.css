@@ -146,4 +146,86 @@ All colors MUST be HSL.
   .yony-glow {
     animation: pulse-glow 2s ease-in-out infinite;
   }
+
+  /* N8N Chat Widget Customization - YonY Branding */
+  :root {
+    --chat--color-primary: hsl(var(--yony-olive-green));
+    --chat--color-primary-shade-50: hsl(var(--yony-dark-green));
+    --chat--color-primary-shade-100: hsl(var(--yony-deep-blue));
+    --chat--color-secondary: hsl(var(--yony-neon-green));
+    --chat--color-secondary-shade-50: hsl(var(--yony-light-green));
+    --chat--color-white: #ffffff;
+    --chat--color-light: hsl(var(--yony-light-green));
+    --chat--color-light-shade-50: hsl(var(--yony-light-green));
+    --chat--color-light-shade-100: hsl(var(--yony-neutral-gray));
+    --chat--color-medium: hsl(var(--yony-neutral-gray));
+    --chat--color-dark: hsl(var(--yony-deep-blue));
+    --chat--color-disabled: hsl(var(--yony-neutral-gray));
+    --chat--color-typing: hsl(var(--yony-neutral-gray));
+
+    --chat--spacing: 1.2rem;
+    --chat--border-radius: 0.75rem;
+    --chat--transition-duration: 0.3s;
+
+    --chat--window--width: 100%;
+    --chat--window--height: 100%;
+
+    --chat--header-height: auto;
+    --chat--header--padding: 1.5rem;
+    --chat--header--background: hsl(var(--yony-deep-blue));
+    --chat--header--color: hsl(var(--yony-light-green));
+    --chat--header--border-top: none;
+    --chat--header--border-bottom: 2px solid hsl(var(--yony-neon-green));
+    --chat--heading--font-size: 1.5rem;
+    --chat--subtitle--font-size: 0.95rem;
+    --chat--subtitle--line-height: 1.6;
+
+    --chat--textarea--height: 60px;
+
+    --chat--message--font-size: 1rem;
+    --chat--message--padding: 1rem;
+    --chat--message--border-radius: 1rem;
+    --chat--message-line-height: 1.6;
+    --chat--message--bot--background: #ffffff;
+    --chat--message--bot--color: hsl(var(--yony-deep-blue));
+    --chat--message--bot--border: 1px solid hsl(var(--yony-light-green));
+    --chat--message--user--background: hsl(var(--yony-olive-green));
+    --chat--message--user--color: #ffffff;
+    --chat--message--user--border: none;
+    --chat--message--pre--background: hsl(var(--yony-light-green));
+
+    --chat--toggle--background: hsl(var(--yony-olive-green));
+    --chat--toggle--hover--background: hsl(var(--yony-dark-green));
+    --chat--toggle--active--background: hsl(var(--yony-deep-blue));
+    --chat--toggle--color: #ffffff;
+    --chat--toggle--size: 70px;
+  }
+
+  /* Additional YonY Chat Enhancements */
+  #n8n-chat-container {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  }
+
+  /* Custom scrollbar for chat */
+  #n8n-chat-container * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--yony-olive-green)) hsl(var(--yony-light-green));
+  }
+
+  #n8n-chat-container *::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #n8n-chat-container *::-webkit-scrollbar-track {
+    background: hsl(var(--yony-light-green));
+  }
+
+  #n8n-chat-container *::-webkit-scrollbar-thumb {
+    background: hsl(var(--yony-olive-green));
+    border-radius: 3px;
+  }
+
+  #n8n-chat-container *::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--yony-dark-green));
+  }
 }

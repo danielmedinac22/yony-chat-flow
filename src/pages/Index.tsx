@@ -1,9 +1,9 @@
-import { ChatContainer } from "@/components/chat/ChatContainer";
+import { YonyChatInterface } from "@/components/chat/YonyChatInterface";
 
 const Index = () => {
   return (
     <div className="h-screen bg-background">
-      <ChatContainer />
+      <YonyChatInterface />
     </div>
   );
 };
