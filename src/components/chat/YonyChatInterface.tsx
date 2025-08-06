@@ -149,51 +149,7 @@ export const YonyChatInterface = () => {
         </div>
       )}
 
-      {/* Debug info for development */}
-      <div className="absolute top-4 left-4 z-50">
-        <Card className="w-80 text-xs">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-xs flex items-center gap-1">
-              <MessageCircle size={12} />
-              YonY Debug Info
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div>Mode: {chatMode}</div>
-              <div>N8N Loaded: {n8nLoaded ? '✅' : '⏳'}</div>
-              <div>Connection: {connectionStatus}</div>
-              <div>Requests: {debugInfo.requestCount}</div>
-            </div>
-            {debugInfo.lastResponse && (
-              <div className="bg-muted p-2 rounded max-h-32 overflow-y-auto">
-                <p className="font-medium mb-1">Last Response:</p>
-                <pre className="text-xs whitespace-pre-wrap">
-                  {JSON.stringify(debugInfo.lastResponse, null, 2)}
-                </pre>
-              </div>
-            )}
-            <div className="flex gap-1">
-              <Button 
-                size="sm" 
-                variant="ghost" 
-                className="text-xs p-1 h-6"
-                onClick={() => setChatMode(chatMode === 'n8n' ? 'fallback' : 'n8n')}
-              >
-                Toggle Mode
-              </Button>
-              <Button 
-                size="sm" 
-                variant="ghost" 
-                className="text-xs p-1 h-6"
-                onClick={() => window.location.reload()}
-              >
-                Reload
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      {/* Debug info hidden for production */}
 
       {/* Main N8N Chat */}
       <N8nChatWidget />
